@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+{% load staticfiles %}
+<div class="container-fluid">
+<h1> Order List.</h1>
+<div class="row">
+    {% if orders %}
+    <div class="col-md-3">
+    {% for order in orders %}
+        <div class="card">
+              <div class="card-header">
+                        <h3>
+                            <span class="badge badge-secondary align-self-center">{{ order.ordernum }}
+                            </span>
+                            <span class="badge badge-secondary align-self-center">{{ order.get_status_display }}
+                            </span>
+                        </h3>
+              </div>
+                              <ul class="list-group list-group-flush">
+                    {% for orderitem in order.orderitems.all %}
+                    <li class='list-group-item {{orderitem.status_color}}'>
+                        {{ orderitem.menuitem.name }}
+                    </li>
+
+                    {% endfor %}
+                </ul>
+             <div class="card-footer">
+                 <a href="#" class="btn btn-primary">Go somewhere</a>
+             </div>
+        </div>
+        <br>
+    {% endfor %}
+    </div>
+    {% else %}
+    <p>No polls are available.</p>
+
+    
+</div>
+    
+</div>
+
+{% endif %}
