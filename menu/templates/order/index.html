@@ -1,32 +1,42 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-
 {% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet">
 <div class="container-fluid">
 <h1> Order List.</h1>
 <div class="row">
     {% if orders %}
     <div class="col-md-3">
     {% for order in orders %}
-        <div class="card">
+        <div class="card {{order.status_border}}">
               <div class="card-header">
                         <h3>
                             <span class="badge badge-secondary align-self-center">{{ order.ordernum }}
                             </span>
-                            <span class="badge badge-secondary align-self-center">{{ order.get_status_display }}
+                            <span class="badge {{order.status_color}}">{{ order.get_status_display }}
                             </span>
                         </h3>
               </div>
                               <ul class="list-group list-group-flush">
                     {% for orderitem in order.orderitems.all %}
                     <li class='list-group-item {{orderitem.status_color}}'>
-                        {{ orderitem.menuitem.name }}
+                        <div class="row">
+                          <div class="col-md-8 text-middle">
+                        <p class="card-text">{{ orderitem.menuitem.name }} <small class="text-muted">{{ orderitem.order_time }}</small></p>
+                        </div>
+                        <div class="col-md-4 text-right">
+                          <p class="card-text">
+                        <a href="#" class="card-text btn btn-sm btn-primary"><span class="oi oi-check"></span></a>
+                          </p>
+                        </div>
+                      </div>
                     </li>
-
                     {% endfor %}
                 </ul>
              <div class="card-footer">
-                 <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <p class='card-text'>Total: {{ order.total }}</p>
              </div>
         </div>
         <br>

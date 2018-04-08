@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.utils import timezone
 from django.db import models
 
 # Create your models here.
@@ -63,6 +64,22 @@ class Order(models.Model):
     def __str__(self):
         return self.customer.name + " " + str(self.ordernum)
 
+    def status_color(self):
+        color = "badge-warning"
+        if self.status == self.SERVED:
+            color = "badge-primary"
+        elif self.status == self.PAID:
+            color = "badge-success"
+        return color
+
+    def status_border(self):
+        color = "border-warning"
+        if self.status == self.SERVED:
+            color = "border-primary"
+        elif self.status == self.PAID:
+            color = "border-success"
+        return color
+
 
 class OrderItem(models.Model):
 
@@ -76,6 +93,7 @@ class OrderItem(models.Model):
     menuitem = models.ForeignKey(MenuItem,
                                  related_name='orderitems',)
     price = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.order.ordernum) + " " + self.menuitem.name
@@ -87,3 +105,8 @@ class OrderItem(models.Model):
         elif self.status == self.PAID:
             color = "bg-success"
         return color
+
+    def order_time(self):
+        diff = timezone.now() - self.timestamp
+        h, m, s = [float(i) for i in str(diff).split(':')]
+        return str(int(60 * h + m + s / 60)) + " minutes ago."
