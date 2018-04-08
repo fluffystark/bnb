@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet">
+<div class="container-fluid">
+<h1> Order List.</h1>
+{% if menutypes %}
+<div class="row">
+<div class="col-md-12">
+  {% for menutype in menutypes %}
+  <button type="button" class="btn btn-primary btn-lg btn-block tab"><h1>{{ menutype.name }}</h1></button>
+{% endfor %}
+</div>
+</div>
+{% endif %} 
+</div>
+

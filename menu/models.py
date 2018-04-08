@@ -108,5 +108,7 @@ class OrderItem(models.Model):
 
     def order_time(self):
         diff = timezone.now() - self.timestamp
-        h, m, s = [float(i) for i in str(diff).split(':')]
-        return str(int(60 * h + m + s / 60)) + " minutes ago."
+        print diff
+        # h, m, s = [float(i) for i in str(diff).split(':')]
+        return diff
+        # str(int(60 * h + m + s / 60)) + " minutes ago."
